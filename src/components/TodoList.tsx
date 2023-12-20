@@ -1,5 +1,7 @@
 import { FC } from 'react';
+
 import { useAppSelector } from '../redux/hooks';
+
 import Todo from './Todo';
 
 const TodoList: FC = () => {
