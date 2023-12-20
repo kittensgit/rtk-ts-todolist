@@ -17,7 +17,7 @@ const Todo: FC<TodoProps> = ({ todo }) => {
                 className={todo.complete ? 'complete' : ''}
                 onClick={() => dispatch(toggleTodo(todo.complete))}
             >
-                {todo.task}
+                {todo.title}
             </span>
             <button onClick={() => dispatch(deleteTodo(todo.id))}>
                 delete
