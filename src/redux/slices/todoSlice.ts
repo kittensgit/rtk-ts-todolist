@@ -1,14 +1,14 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 import { v4 } from 'uuid';
 
 import { ITodo } from '../../types/todo';
-import axios from 'axios';
 
-interface TodoState {
+interface IState {
     todos: ITodo[];
 }
 
-const initialState: TodoState = {
+const initialState: IState = {
     todos: [],
 };
 
@@ -16,13 +16,13 @@ export const fetchTodos = createAsyncThunk<ITodo[], void>(
     'todos/fetchTodos',
     async () => {
         const response = await axios.get<ITodo[]>(
-            'https://jsonplaceholder.typicode.com/posts?_limit=10'
+            'https://jsonplaceholder.typicode.com/todos?_limit=10'
         );
         return response.data;
     }
 );
 
-export const todoSlice = createSlice({
+const todoSlice = createSlice({
     name: 'todolist',
     initialState,
     reducers: {
@@ -39,9 +39,9 @@ export const todoSlice = createSlice({
                 (todo) => todo.id !== action.payload
             );
         },
-        toggleTodo: (state, action: PayloadAction<ITodo['complete']>) => {
+        toggleTodo: (state, action: PayloadAction<ITodo['id']>) => {
             state.todos = state.todos.map((todo) =>
-                todo.complete === action.payload
+                todo.id === action.payload
                     ? { ...todo, complete: !todo.complete }
                     : todo
             );

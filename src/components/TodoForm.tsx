@@ -8,10 +8,8 @@ const TodoForm: FC = () => {
     const dispatch = useAppDispatch();
 
     const handleAddTodo = () => {
-        if (value) {
-            setValue('');
-            dispatch(addTodo(value));
-        }
+        setValue('');
+        dispatch(addTodo(value));
     };
 
     const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -29,7 +27,7 @@ const TodoForm: FC = () => {
                 type="text"
                 placeholder="enter task"
             />
-            <button onClick={handleAddTodo}>add task</button>
+            <button onClick={handleAddTodo}>add</button>
         </div>
     );
 };

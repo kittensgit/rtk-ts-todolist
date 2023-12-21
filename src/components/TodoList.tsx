@@ -1,20 +1,22 @@
-import { FC, useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
-
-import Todo from './Todo';
 import { fetchTodos } from '../redux/slices/todoSlice';
 
-const TodoList: FC = () => {
+import Todo from './Todo';
+
+const TodoList = () => {
     const todos = useAppSelector((state) => state.todos.todos);
     const dispatch = useAppDispatch();
+
     useEffect(() => {
         dispatch(fetchTodos());
     }, []);
+
     return (
         <div>
             {todos.map((todo) => (
-                <Todo key={todo.id} todo={todo} />
+                <Todo todo={todo} />
             ))}
         </div>
     );
