@@ -4,12 +4,14 @@ import { v4 } from 'uuid';
 
 import { ITodo } from '../../types/todo';
 
-interface IState {
+interface TodosState {
     todos: ITodo[];
+    filteredTodos: ITodo[];
 }
 
-const initialState: IState = {
+const initialState: TodosState = {
     todos: [],
+    filteredTodos: [],
 };
 
 export const fetchTodos = createAsyncThunk<ITodo[], void>(
@@ -46,13 +48,25 @@ const todoSlice = createSlice({
                     : todo
             );
         },
+        filterTodos: (state, action: PayloadAction<string | boolean>) => {
+            if (action.payload === 'all') {
+                state.filteredTodos = state.todos;
+            } else {
+                state.filteredTodos = state.todos.filter(
+                    (todo) => todo.complete === action.payload
+                );
+            }
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(fetchTodos.pending, (state) => {
             state.todos = [];
         });
         builder.addCase(fetchTodos.fulfilled, (state, action) => {
-            state.todos = action.payload;
+            state.todos = action.payload.map((todo) => ({
+                ...todo,
+                complete: false,
+            }));
         });
         builder.addCase(fetchTodos.rejected, (state) => {
             state.todos = [];
@@ -60,5 +74,6 @@ const todoSlice = createSlice({
     },
 });
 
-export const { addTodo, deleteTodo, toggleTodo } = todoSlice.actions;
+export const { addTodo, deleteTodo, toggleTodo, filterTodos } =
+    todoSlice.actions;
 export const todoReducer = todoSlice.reducer;
