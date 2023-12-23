@@ -16,11 +16,11 @@ const TodoList = () => {
             dispatch(filterTodos('all'));
         };
         fetchData();
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
         dispatch(filterTodos('all'));
-    }, [todos]);
+    }, [dispatch, todos]);
 
     return (
         <div>
