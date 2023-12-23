@@ -57,6 +57,11 @@ const todoSlice = createSlice({
                 );
             }
         },
+        sortTodo: (state) => {
+            state.todos = state.todos.sort((t1: ITodo, t2: ITodo) => {
+                return t1.title.localeCompare(t2.title);
+            });
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(fetchTodos.pending, (state) => {
@@ -74,6 +79,6 @@ const todoSlice = createSlice({
     },
 });
 
-export const { addTodo, deleteTodo, toggleTodo, filterTodos } =
+export const { addTodo, deleteTodo, toggleTodo, filterTodos, sortTodo } =
     todoSlice.actions;
 export const todoReducer = todoSlice.reducer;
