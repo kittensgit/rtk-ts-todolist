@@ -12,7 +12,7 @@ const TodoList = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            await dispatch(fetchTodos());
+            // await dispatch(fetchTodos());
             dispatch(filterTodos('all'));
         };
         fetchData();

@@ -33,6 +33,7 @@ const todoSlice = createSlice({
                 id: v4(),
                 title: action.payload,
                 complete: false,
+                createdAt: new Date(),
             };
             state.todos.push(newTodo);
         },
@@ -57,10 +58,16 @@ const todoSlice = createSlice({
                 );
             }
         },
-        sortTodo: (state) => {
-            state.todos = state.todos.sort((t1: ITodo, t2: ITodo) => {
+        sortByAlphabet: (state) => {
+            state.todos = [...state.todos].sort((t1: ITodo, t2: ITodo) => {
                 return t1.title.localeCompare(t2.title);
             });
+        },
+        sortByDate: (state) => {
+            state.todos = state.todos.sort(
+                (t1: ITodo, t2: ITodo) =>
+                    Number(t1.createdAt) - Number(t2.createdAt)
+            );
         },
     },
     extraReducers: (builder) => {
@@ -79,6 +86,12 @@ const todoSlice = createSlice({
     },
 });
 
-export const { addTodo, deleteTodo, toggleTodo, filterTodos, sortTodo } =
-    todoSlice.actions;
+export const {
+    addTodo,
+    deleteTodo,
+    toggleTodo,
+    filterTodos,
+    sortByAlphabet,
+    sortByDate,
+} = todoSlice.actions;
 export const todoReducer = todoSlice.reducer;
